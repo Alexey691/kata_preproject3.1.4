@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Users</title>
@@ -7,8 +7,12 @@
 </head>
 <body>
 <div>
-    <h1><th th:utext="${user.getName}"/> roles: <th th:each="role : ${user.getRoles()}">
-        <th:block th:text="${role.getName}"></th:block></h1>
+    <h1>
+        <th th:text="${user.getName}"/>
+        roles:
+        <th th:each="role : ${user.getRoles()}">
+            <th:block th:text="${role.getName}"></th:block>
+    </h1>
 </div>
 <div>
     <form th:action="@{/logout}" method="post">
@@ -35,9 +39,18 @@
         <td th:utext="${user.getName}"></td>
         <td th:utext="${user.getLastname}"></td>
         <td th:utext="${user.getAge}"></td>
-        <td><a th:href="@{/admin/update{id}(id=${user.getId})}">edit</a>
+        <td>
+            <form th:method="GET" th:action="@{/admin/update{id}(id=${user.getId})}" th:object="${user}">
+                <input type="submit" value="UPDATE"/>
+            </form>
+            <!--<a th:href="@{/admin/update{id}(id=${user.getId})}">edit</a>-->
         </td>
-        <td><a th:href="@{/admin/delete/{id}(id=${user.getId})}">delete</a>
+        <td>
+            <form th:method="DELETE" th:action="@{/admin/delete/{id}(id=${user.getId})}" th:object="${user}">
+                <input type="submit" value="DELETE"/>
+            </form>
+            <!--<a th:href="@{/admin/delete/{id}(id=${user.getId})}"
+               th:method="DELETE" th:object="${user}">delete</a>-->
         </td>
 
     </tr>
