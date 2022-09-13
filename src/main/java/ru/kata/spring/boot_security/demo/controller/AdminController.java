@@ -22,12 +22,13 @@ public class AdminController {
         this.userService = userService;
     }
 
-
     @GetMapping
     public String getListUsers(Principal principal, Model model) {
         User user = userService.findByName(principal.getName());
         model.addAttribute("user", user);
+        model.addAttribute("newUser", new User());
         model.addAttribute("users", userService.getAllUsers());
+        model.addAttribute("roles", userService.getAllRoles());
         return "users";
     }
 
@@ -38,8 +39,8 @@ public class AdminController {
         return "/adduser";
     }
 
-    @PostMapping("add")
-    public String addUser(User user) {
+    @PostMapping()
+    public String addUser(@ModelAttribute("newUser") User user) {
         userService.saveUser(user);
         return "redirect:/admin";
     }

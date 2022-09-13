@@ -23,6 +23,8 @@ public class User implements UserDetails {
 
     private String lastname;
 
+    private String mail;
+
     private int age;
     private String password;
 
@@ -31,10 +33,11 @@ public class User implements UserDetails {
 
     }
 
-    public User(String name, String lastname, int age, String password) {
+    public User(String name, String lastname, String mail, int age, String password) {
         this.name = name;
         this.lastname = lastname;
         this.age = age;
+        this.mail = mail;
         this.password = password;
     }
 
@@ -48,7 +51,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return getRoles().stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList()); //?
+        return getRoles().stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
     }
 
     @Override
