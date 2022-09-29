@@ -29,7 +29,8 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.29</version>
+            <version>8.0.30</version>
+            <scope>runtime</scope>
         </dependency>
 
         <dependency>
@@ -60,6 +61,24 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
+        <dependency> <!-- добавлено 28.09-->
+            <groupId>org.glassfish</groupId>
+            <artifactId>jakarta.el</artifactId>
+            <version>5.0.0-M1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>  <!-- добавлено 28.09-->
+            <groupId>org.webjars</groupId>
+            <artifactId>bootstrap</artifactId>
+            <version>5.2.0</version>
+        </dependency>
+
+        <dependency> <!-- добавлено 28.09 -->
+            <groupId>org.webjars</groupId>
+            <artifactId>webjars-locator-core</artifactId>
+            <version>0.52</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -67,8 +86,11 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.3.10.RELEASE</version>
             </plugin>
         </plugins>
     </build>
+
+
 
 </project>

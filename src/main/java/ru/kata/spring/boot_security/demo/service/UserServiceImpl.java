@@ -29,7 +29,8 @@ public class UserServiceImpl implements UserService {
     private EntityManager entityManager;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository,
+                           BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
@@ -68,6 +69,10 @@ public class UserServiceImpl implements UserService {
 
     public User findByName(String name) {
         return userRepository.findByName(name);
+    }
+
+    public User findById(Long id) {
+        return userRepository.findById(id).orElse(null);
     }
 
     public List<Role> getAllRoles() {

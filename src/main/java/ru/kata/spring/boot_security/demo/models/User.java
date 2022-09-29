@@ -1,6 +1,9 @@
 package ru.kata.spring.boot_security.demo.models;
 
 import lombok.Data;
+import lombok.ToString;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -47,6 +50,8 @@ public class User implements UserDetails {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
 
+    @Fetch(FetchMode.JOIN)
+    @ToString.Exclude
     private Collection<Role> roles;
 
     @Override
