@@ -3,11 +3,9 @@ package ru.kata.spring.boot_security.demo.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
-import ru.kata.spring.boot_security.demo.models.Role;
-import ru.kata.spring.boot_security.demo.models.User;
+import ru.kata.spring.boot_security.demo.model.Role;
+import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
@@ -35,7 +33,7 @@ public class AdminRestController {
     }
 
     @GetMapping("/users/{id}")
-    public ResponseEntity<User> showUser(@PathVariable Long id) {
+    public ResponseEntity<User> loadUserById(@PathVariable Long id) {
         User user = userService.findById(id);
         return user != null
                 ? new ResponseEntity<>(user, HttpStatus.OK)
@@ -58,13 +56,6 @@ public class AdminRestController {
     public ResponseEntity<User> deleteUser(@PathVariable Integer id) {
         userService.delUser(id);
         return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @GetMapping("/viewUserPage") //!!!!
-    public ResponseEntity<User> showUser(Authentication auth) {
-        UserDetails ud = (UserDetails) auth.getPrincipal();
-        User user = userService.findByName(ud.getUsername());
-        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @GetMapping("/roles")
