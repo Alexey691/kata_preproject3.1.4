@@ -17,7 +17,6 @@ public class UserRestController {
 
     private final UserService userService;
 
-
     @Autowired
     public UserRestController(UserService userService) {
         this.userService = userService;
@@ -26,7 +25,7 @@ public class UserRestController {
     @GetMapping()
     public ResponseEntity<User> showUserPage(Authentication auth) {
         UserDetails ud = (UserDetails) auth.getPrincipal();
-        User user = userService.findByName(ud.getUsername());
+        User user = userService.findByMail(ud.getUsername());
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 }

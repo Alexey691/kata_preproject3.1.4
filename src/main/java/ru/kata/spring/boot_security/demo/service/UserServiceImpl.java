@@ -35,22 +35,26 @@ public class UserServiceImpl implements UserService {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
+    @Override
     public Optional<User> getUser(long id) {
         return userRepository.findById(id);
     }
 
+    @Override
     public List<User> getAllUsers() {
         return entityManager.createQuery(" select distinct u from User u join fetch u.roles r order by u.id ",
                 User.class).getResultList();
     }
 
     @Transactional
+    @Override
     public void saveUser(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
 
     @Transactional
+    @Override
     public void delUser(long id) {
         userRepository.deleteById(id);
     }
@@ -66,29 +70,39 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    @Override
     public User findByName(String name) {
         return userRepository.findByName(name);
     }
 
+    @Override
+    public User findByMail(String mail) {
+        return userRepository.findByMail(mail);
+    }
+
+
+    @Override
     public User findById(Long id) {
         return userRepository.findById(id).orElse(null);
     }
 
+    @Override
     public List<Role> getAllRoles() {
         return roleRepository.findAll();
     }
 
     @Override
     @Transactional(readOnly = true)
-    public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
-        User user = userRepository.findByName(name);
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findByMail(username);
 
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
         }
 
         return new org.springframework.security.core.userdetails.User(
-                user.getName(),
+
+                user.getMail(),
                 user.getPassword(),
                 user.getAuthorities());
     }

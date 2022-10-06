@@ -20,6 +20,8 @@ public interface UserService extends UserDetailsService {
 
     User findByName(String name);
 
+    User findByMail(String mail);
+
     User findById(Long id);
 
     List<Role> getAllRoles();
